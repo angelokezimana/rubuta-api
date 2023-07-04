@@ -17,6 +17,7 @@ class RegisterApi(views.APIView):
 
 
 class LoginApi(views.APIView):
+    authentication_classes = (auth.CustomUserAuth,)
     permission_classes = (custom_permissions.IsNotAuthenticated,)
 
     def post(self, request):
