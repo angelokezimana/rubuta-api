@@ -2,7 +2,7 @@ from rest_framework import views, response, exceptions, permissions, status
 
 from .models import User
 from .serializers import UserSerializer, ChangePasswordSerializer
-from . import services, auth
+from . import services, auth, permissions as custom_permissions
 
 
 class RegisterApi(views.APIView):
@@ -17,6 +17,8 @@ class RegisterApi(views.APIView):
 
 
 class LoginApi(views.APIView):
+    permission_classes = (custom_permissions.IsNotAuthenticated,)
+
     def post(self, request):
         email = request.data["email"]
         password = request.data["password"]
