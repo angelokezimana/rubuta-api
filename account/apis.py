@@ -1,7 +1,7 @@
-from rest_framework import views, response, exceptions, permissions
+from rest_framework import views, response, exceptions, permissions, status
 
 from .models import User
-from .serializers import UserSerializer
+from .serializers import UserSerializer, ChangePasswordSerializer
 from . import services, auth
 
 
@@ -57,3 +57,25 @@ class LogoutApi(views.APIView):
         resp.data = {"message": "logout"}
 
         return resp
+
+
+class ChangePasswordApi(views.APIView):
+    authentication_classes = (auth.CustomUserAuth,)
+    permission_classes = (permissions.IsAuthenticated,)
+
+    def put(self, request):
+        serializer = ChangePasswordSerializer(
+            data=request.data, context={"request": request}
+        )
+        serializer.is_valid(raise_exception=True)
+
+        data = serializer.validated_data
+        user = request.user
+
+        user.set_password(data["password"])
+
+        user.save()
+
+        return response.Response(
+            {"message": "Password changed successfully!"}, status=status.HTTP_200_OK
+        )
