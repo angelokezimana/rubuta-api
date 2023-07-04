@@ -8,10 +8,14 @@ django = "*"
 psycopg = {extras = ["binary"], version = "*"}
 django-environ = "*"
 djangorestframework = "*"
+pillow = "*"
+pyjwt = "*"
+django-cors-headers = "*"
 
 [dev-packages]
 pytest = "*"
 pytest-django = "*"
+black = "*"
 
 [requires]
 python_version = "3.11"
