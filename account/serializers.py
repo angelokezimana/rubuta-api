@@ -18,6 +18,7 @@ class UserSerializer(serializers.Serializer):
     password2 = serializers.CharField(write_only=True)
     birthdate = serializers.DateField(required=False)
     phone = serializers.CharField(required=False)
+    image = serializers.ImageField(required=False)
 
     def to_internal_value(self, data):
         data = super().to_internal_value(data)
