@@ -1,8 +1,6 @@
 import dataclasses
-import jwt
 from typing import TYPE_CHECKING
 
-from django.utils import timezone
 from django.conf import settings
 
 from .models import User
@@ -51,14 +49,3 @@ def create_user(user: "UserDataClass") -> "UserDataClass":
     instance.save()
 
     return UserDataClass.from_instance(user=instance)
-
-
-def create_token(user_id: int) -> str:
-    payload = dict(
-        id = user_id,
-        exp=timezone.datetime.utcnow() + timezone.timedelta(hours=24),
-        iat=timezone.datetime.utcnow()
-    )
-    token = jwt.encode(payload, settings.JWT_SECRET, algorithm="HS256")
-
-    return token
