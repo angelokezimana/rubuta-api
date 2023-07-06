@@ -4,8 +4,10 @@ from django.db import models
 from django.conf import settings
 from django.utils import timezone
 
+from core.models import BaseModel
 
-class Message(models.Model):
+
+class Message(BaseModel):
     DEFAULT_MSG_STATUS_SENDER_CHOICES = "sent"
     MSG_STATUS_SENDER_CHOICES = [
         ("draft", "draft"),
@@ -14,9 +16,8 @@ class Message(models.Model):
         ("delete", "delete"),
     ]
 
-    DEFAULT_MSG_STATUS_RECIPIENT_CHOICES = "unread"
     MSG_STATUS_RECIPIENT_CHOICES = [
-        (DEFAULT_MSG_STATUS_RECIPIENT_CHOICES, "unread"),
+        ("unread", "unread"),
         ("read", "read"),
         ("bin", "bin"),
         ("delete", "delete"),
@@ -37,7 +38,8 @@ class Message(models.Model):
         verbose_name="Message status for recipient",
         max_length=30,
         choices=MSG_STATUS_RECIPIENT_CHOICES,
-        default=DEFAULT_MSG_STATUS_RECIPIENT_CHOICES,
+        null=True,
+        blank=True,
     )
     sender = models.ForeignKey(
         settings.AUTH_USER_MODEL,
@@ -50,5 +52,7 @@ class Message(models.Model):
         on_delete=models.CASCADE,
         related_name="recipient_user",
         verbose_name="Recipient user",
+        null=True,
+        blank=True,
     )
     created_at = models.DateTimeField(verbose_name="Created at", auto_now_add=True)
