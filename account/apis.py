@@ -1,11 +1,19 @@
-from rest_framework import views, response, exceptions, permissions, status
+from rest_framework import status
+from rest_framework.views import APIView
+from rest_framework.response import Response
+from rest_framework.permissions import IsAuthenticated
+from rest_framework_simplejwt.token_blacklist.models import (
+    OutstandingToken,
+    BlacklistedToken,
+)
+from rest_framework_simplejwt.tokens import RefreshToken
 
 from .models import User
 from .serializers import UserSerializer, ChangePasswordSerializer
-from . import services, auth, permissions as custom_permissions
+from . import services
 
 
-class RegisterApi(views.APIView):
+class RegisterApi(APIView):
     def post(self, request):
         serializer = UserSerializer(data=request.data)
         serializer.is_valid(raise_exception=True)
@@ -13,58 +21,37 @@ class RegisterApi(views.APIView):
         data = serializer.validated_data
         serializer.instance = services.create_user(user=data)
 
-        return response.Response(data=serializer.data)
+        return Response(data=serializer.data)
 
 
-class LoginApi(views.APIView):
-    authentication_classes = (auth.CustomUserAuth,)
-    permission_classes = (custom_permissions.IsNotAuthenticated,)
-
-    def post(self, request):
-        email = request.data["email"]
-        password = request.data["password"]
-
-        user = User.objects.filter(email=email).first()
-
-        if user is None or not user.check_password(raw_password=password):
-            raise exceptions.AuthenticationFailed("Invalid Credentials")
-
-        token = services.create_token(user_id=user.id)
-
-        resp = response.Response()
-
-        resp.set_cookie(key="jwt", value=token, httponly=True)
-
-        return resp
-
-
-class UserApi(views.APIView):
-    authentication_classes = (auth.CustomUserAuth,)
-    permission_classes = (permissions.IsAuthenticated,)
+class UserApi(APIView):
+    permission_classes = (IsAuthenticated,)
 
     def get(self, request):
         user = request.user
 
         serializer = UserSerializer(user)
 
-        return response.Response(serializer.data)
+        return Response(serializer.data)
 
 
-class LogoutApi(views.APIView):
-    authentication_classes = (auth.CustomUserAuth,)
-    permission_classes = (permissions.IsAuthenticated,)
+# class LogoutApi(APIView):
+#     permission_classes = (IsAuthenticated,)
 
-    def post(self, request):
-        resp = response.Response()
-        resp.delete_cookie("jwt")
-        resp.data = {"message": "logout"}
+#     def post(self, request, *args, **kwargs):
+#         if self.request.data.get("all"):
+#             token: OutstandingToken
+#             for token in OutstandingToken.objects.filter(user=request.user):
+#                 _, _ = BlacklistedToken.objects.get_or_create(token=token)
+#             return Response({"status": "OK, goodbye, all refresh tokens blacklisted"})
+#         refresh_token = self.request.data.get("refresh_token")
+#         token = RefreshToken(token=refresh_token)
+#         token.blacklist()
+#         return Response({"status": "OK, goodbye"}, status=status.HTTP_200_OK)
 
-        return resp
 
-
-class ChangePasswordApi(views.APIView):
-    authentication_classes = (auth.CustomUserAuth,)
-    permission_classes = (permissions.IsAuthenticated,)
+class ChangePasswordApi(APIView):
+    permission_classes = (IsAuthenticated,)
 
     def put(self, request):
         serializer = ChangePasswordSerializer(
@@ -79,6 +66,6 @@ class ChangePasswordApi(views.APIView):
 
         user.save()
 
-        return response.Response(
+        return Response(
             {"message": "Password changed successfully!"}, status=status.HTTP_200_OK
         )
