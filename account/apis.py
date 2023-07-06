@@ -35,19 +35,19 @@ class UserApi(APIView):
         return Response(serializer.data)
 
 
-class LogoutApi(APIView):
-    permission_classes = (IsAuthenticated,)
+# class LogoutApi(APIView):
+#     permission_classes = (IsAuthenticated,)
 
-    def post(self, request, *args, **kwargs):
-        if self.request.data.get("all"):
-            token: OutstandingToken
-            for token in OutstandingToken.objects.filter(user=request.user):
-                _, _ = BlacklistedToken.objects.get_or_create(token=token)
-            return Response({"status": "OK, goodbye, all refresh tokens blacklisted"})
-        refresh_token = self.request.data.get("refresh_token")
-        token = RefreshToken(token=refresh_token)
-        token.blacklist()
-        return Response({"status": "OK, goodbye"}, status=status.HTTP_200_OK)
+#     def post(self, request, *args, **kwargs):
+#         if self.request.data.get("all"):
+#             token: OutstandingToken
+#             for token in OutstandingToken.objects.filter(user=request.user):
+#                 _, _ = BlacklistedToken.objects.get_or_create(token=token)
+#             return Response({"status": "OK, goodbye, all refresh tokens blacklisted"})
+#         refresh_token = self.request.data.get("refresh_token")
+#         token = RefreshToken(token=refresh_token)
+#         token.blacklist()
+#         return Response({"status": "OK, goodbye"}, status=status.HTTP_200_OK)
 
 
 class ChangePasswordApi(APIView):
