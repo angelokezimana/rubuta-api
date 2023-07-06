@@ -13,7 +13,7 @@ class UserManager(BaseUserManager):
         email: str,
         password: str = None,
         is_staff: bool = False,
-        is_superuser: bool = False
+        is_superuser: bool = False,
     ) -> "User":
         if not first_name:
             raise ValueError("First name is required")
@@ -42,7 +42,7 @@ class UserManager(BaseUserManager):
             email=email,
             password=password,
             is_staff=True,
-            is_superuser=True
+            is_superuser=True,
         )
         user.save()
 
@@ -63,7 +63,7 @@ class User(AbstractUser):
         blank=True,
         null=True,
     )
-    date_joined = models.DateTimeField(verbose_name="Date joined", default=timezone.now)
+    date_joined = models.DateTimeField(verbose_name="Date joined", auto_now_add=True)
     image = models.ImageField(upload_to="images/", blank=True)
 
     objects = UserManager()
