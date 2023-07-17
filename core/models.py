@@ -6,7 +6,7 @@ class BaseModel(models.Model):
     is_deleted = models.BooleanField(default=False)
     deleted_at = models.DateTimeField(null=True, blank=True)
 
-    def delete(self):
+    def temp_delete(self):
         self.is_deleted = True
         self.deleted_at = timezone.now()
         self.save()
