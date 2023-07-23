@@ -24,15 +24,15 @@ class RegisterApi(APIView):
         return Response(data=serializer.data)
 
 
-class UserApi(APIView):
-    permission_classes = (IsAuthenticated,)
+# class UserApi(APIView):
+#     permission_classes = (IsAuthenticated,)
 
-    def get(self, request):
-        user = request.user
+#     def get(self, request):
+#         user = request.user
 
-        serializer = UserSerializer(user)
+#         serializer = UserSerializer(user)
 
-        return Response(serializer.data)
+#         return Response(serializer.data)
 
 
 class LogoutApi(APIView):
