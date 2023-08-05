@@ -16,7 +16,7 @@ pyjwt = "*"
 [dev-packages]
 pytest = "*"
 pytest-django = "*"
-black = "*"
+pre-commit = "*"
 
 [requires]
 python_version = "3.11"
