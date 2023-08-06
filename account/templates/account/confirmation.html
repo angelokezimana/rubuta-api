@@ -1,0 +1,35 @@
+{% load i18n %}
+
+{% block subject %}
+{% blocktrans %}{{ site_name }} - Your account has been successfully created and activated!{% endblocktrans %}
+{% endblock %}
+
+{% block text_body %}
+{% trans "Your account has been created and is ready to use!" %}
+
+{% trans "Thanks for using our site!" %}
+
+{% blocktrans %}The {{ site_name }} Team{% endblocktrans %}
+{% endblock text_body %}
+
+{% block html_body %}
+<div
+    style="font-family: 'Courier New', monospace;
+    margin-top: 10%;
+    text-align: center;">
+
+    <p>{% trans "Your account has been created and is ready to use!" %}</p>
+
+    <p>{% trans "Thanks for using our site!" %}</p>
+
+    <p style="
+        background-color: #EEEEEE;
+        font-weight: 600;
+        font-size: 40px;
+        padding: 10px;
+        border-radius: 6px;
+    ">
+        {% blocktrans %}The {{ site_name }} Team{% endblocktrans %}
+    </p>
+</div>
+{% endblock html_body %}

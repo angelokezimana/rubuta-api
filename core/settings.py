@@ -80,6 +80,8 @@ SIMPLE_JWT = {
 
 
 # DJOSER CONFIG
+DOMAIN = env("DOMAIN")
+SITE_NAME = env("SITE_NAME")
 DJOSER = {
     "LOGIN_FIELD": "email",
     "USER_CREATE_PASSWORD_RETYPE": True,
@@ -98,6 +100,12 @@ DJOSER = {
         "user": "account.serializers.CustomUserCreateSerializer",
         "current_user": "account.serializers.CustomUserCreateSerializer",
         "user_delete": "djoser.serializers.UserDeleteSerializer",
+    },
+    "EMAIL": {
+        "activation": "account.email.ActivationEmail",
+        "confirmation": "account.email.ConfirmationEmail",
+        "password_reset": "account.email.PasswordResetEmail",
+        "password_changed_confirmation": "account.email.PasswordChangedConfirmationEmail",
     },
 }
 
