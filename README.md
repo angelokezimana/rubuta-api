@@ -1,4 +1,4 @@
-# Search Ads Solution (SAS)
+# RUBUTA API
 
 ## To install pipenv
 pip install pipenv
