@@ -1,4 +1,4 @@
-# RUBUTA
+# RUBUTA API
 
 ## To install pipenv
 pip install pipenv
