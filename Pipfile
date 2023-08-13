@@ -13,6 +13,7 @@ django-cors-headers = "*"
 djangorestframework-simplejwt = "*"
 pyjwt = "*"
 djoser = "*"
+drf-spectacular = "*"
 
 [dev-packages]
 pytest = "*"
