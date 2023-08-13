@@ -25,6 +25,6 @@ urlpatterns = [
     path("api/v1/", include("djoser.urls")),
     path("api/v1/", include("djoser.urls.jwt")),
     path("api/v1/", include("account.urls")),
-    path("schema/", SpectacularAPIView.as_view(), name="schema"),
-    path("docs/", SpectacularSwaggerView.as_view()),
+    path("api/v1/schema/", SpectacularAPIView.as_view(), name="schema"),
+    path("api/v1/docs/", SpectacularSwaggerView.as_view()),
 ]
