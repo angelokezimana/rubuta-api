@@ -1,8 +1,6 @@
-from datetime import date
-from django.db import models
-from django.contrib.auth.models import AbstractUser
 from django.contrib.auth.base_user import BaseUserManager
-from django.utils import timezone
+from django.contrib.auth.models import AbstractUser
+from django.db import models
 
 
 class UserManager(BaseUserManager):
@@ -11,7 +9,7 @@ class UserManager(BaseUserManager):
         first_name: str,
         last_name: str,
         email: str,
-        password: str = None,
+        password: str = "",
         is_staff: bool = False,
         is_superuser: bool = False,
     ) -> "User":
@@ -34,7 +32,7 @@ class UserManager(BaseUserManager):
         return user
 
     def create_superuser(
-        self, first_name: str, last_name: str, email: str, password: str = None
+        self, first_name: str, last_name: str, email: str, password: str = ""
     ) -> "User":
         user = self.create_user(
             first_name=first_name,
