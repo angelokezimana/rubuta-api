@@ -12,7 +12,8 @@ class UserAdmin(admin.ModelAdmin):
         "birthdate",
         "phone",
         "date_joined",
-        "image"
+        "image",
     )
+
 
 admin.site.register(User, UserAdmin)

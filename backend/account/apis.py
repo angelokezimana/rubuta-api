@@ -1,3 +1,8 @@
+from account.models import User
+from account.permissions import UserOrGroupPermissions
+from account.serializers import ContentTypeSerializer
+from account.serializers import GroupSerializer
+from account.serializers import UserSerializer
 from django.contrib.auth.models import Group
 from django.contrib.contenttypes.models import ContentType
 from django.db.models import Q
@@ -9,12 +14,6 @@ from rest_framework.views import APIView
 from rest_framework_simplejwt.token_blacklist.models import BlacklistedToken
 from rest_framework_simplejwt.token_blacklist.models import OutstandingToken
 from rest_framework_simplejwt.tokens import RefreshToken
-
-from account.models import User
-from account.permissions import UserOrGroupPermissions
-from account.serializers import ContentTypeSerializer
-from account.serializers import GroupSerializer
-from account.serializers import UserSerializer
 
 
 class LogoutApi(APIView):

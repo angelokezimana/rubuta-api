@@ -1,13 +1,15 @@
-# RUBUTA API
+# Search Ads Solution
 
-## To install pipenv
+## Backend
+
+### To install pipenv
 pip install pipenv
 
-## To install packages using pipenv
+### To install packages using pipenv
 pipenv install django
 
-## To install packages in Dev Environment
+### To install packages in Dev Environment
 pipenv install pytest --dev
 
-## To activate the project's virtualenv
+### To activate the project's virtualenv
 Run `pipenv shell`
