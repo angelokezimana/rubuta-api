@@ -4,9 +4,7 @@ import {
     loginUser,
     getUser,
     logoutUser,
-    ACCESS_TOKEN,
-    REFRESH_TOKEN,
-} from '/src/services/api/auth'
+} from '../services/api/auth'
 
 export const useAuthStore = defineStore({
     id: 'auth',
@@ -54,10 +52,10 @@ export const useAuthStore = defineStore({
                     data.re_password
                 )
                 this.authStatus =
-                    'An email has been sent to your email address containing an activation link. \
-                    Please click on the link to activate your account. \
-                    If you do not click the link your account will remain inactive and you will not receive further emails. \
-                    If you do not receive the email within a few minutes, please check your spam folder.'
+                    'An email has been sent to your email address containing an activation link.' +
+                    'Please click on the link to activate your account.' +
+                    'If you do not click the link your account will remain inactive and you will not receive further emails.' +
+                    'If you do not receive the email within a few minutes, please check your spam folder.'
                 this.router.push({ name: 'Login' })
             } catch (error) {
                 this.authErrors = error.response.data

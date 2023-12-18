@@ -14,75 +14,40 @@ const tokenRequest = axios.create({
 })
 
 const registerUser = async (
-    first_name,
-    last_name,
+    firstName,
+    lastName,
     email,
     password,
-    re_password
+    rePassword
 ) => {
     try {
         const registerBody = {
-            first_name,
-            last_name,
+            first_name: firstName,
+            last_name: lastName,
             email,
             password,
-            re_password,
+            re_password: rePassword,
         }
         const response = await tokenRequest.post('/api/v1/users/', registerBody)
 
         return await Promise.resolve(response.data)
     } catch (error) {
-        return await Promise.reject(error)
+        return Promise.reject(error)
     }
 }
 
 const activateAccount = async (activationUid, activationToken) => {
     try {
-        await tokenRequest.post('/api/v1/users/activation/', {
+        const response = await tokenRequest.post('/api/v1/users/activation/', {
             uid: activationUid,
             token: activationToken,
         })
-    } catch (error) {
-        return await Promise.reject(error)
-    }
-}
-
-const loginUser = async (email, password) => {
-    try {
-        const loginBody = { email, password }
-        const response = await tokenRequest.post(
-            '/api/v1/jwt/create/',
-            loginBody
-        )
-        window.localStorage.setItem(ACCESS_TOKEN, response.data.access)
-        window.localStorage.setItem(REFRESH_TOKEN, response.data.refresh)
-
-        authRequest.defaults.headers.Authorization = `JWT ${window.localStorage.getItem(
-            ACCESS_TOKEN
-        )}`
 
         return await Promise.resolve(response.data)
     } catch (error) {
-        return await Promise.reject(error)
+        return Promise.reject(error)
     }
 }
-
-const refreshToken = async () => {
-    const refreshBody = { refresh: window.localStorage.getItem(REFRESH_TOKEN) }
-    try {
-        const response = await tokenRequest.post(
-            '/api/v1/jwt/refresh/',
-            refreshBody
-        )
-        window.localStorage.setItem(ACCESS_TOKEN, response.data.access)
-        window.localStorage.setItem(REFRESH_TOKEN, response.data.refresh)
-        return await Promise.resolve(response.data)
-    } catch (error) {
-        return await Promise.reject(error)
-    }
-}
-
-const isCorrectRefreshError = (status) => status === 401
 
 /*
  * authRequest
@@ -104,11 +69,48 @@ const authRequest = axios.create({
     },
 })
 
+const loginUser = async (email, password) => {
+    try {
+        const loginBody = { email, password }
+        const response = await tokenRequest.post(
+            '/api/v1/jwt/create/',
+            loginBody
+        )
+        window.localStorage.setItem(ACCESS_TOKEN, response.data.access)
+        window.localStorage.setItem(REFRESH_TOKEN, response.data.refresh)
+
+        authRequest.defaults.headers.Authorization = `JWT ${window.localStorage.getItem(
+            ACCESS_TOKEN
+        )}`
+
+        return await Promise.resolve(response.data)
+    } catch (error) {
+        return Promise.reject(error)
+    }
+}
+
+const refreshToken = async () => {
+    const refreshBody = { refresh: window.localStorage.getItem(REFRESH_TOKEN) }
+    try {
+        const response = await tokenRequest.post(
+            '/api/v1/jwt/refresh/',
+            refreshBody
+        )
+        window.localStorage.setItem(ACCESS_TOKEN, response.data.access)
+        window.localStorage.setItem(REFRESH_TOKEN, response.data.refresh)
+        return await Promise.resolve(response.data)
+    } catch (error) {
+        return Promise.reject(error)
+    }
+}
+
+const isCorrectRefreshError = (status) => status === 401
+
 const getUser = async () => {
     try {
         return await authRequest.get('/api/v1/users/me')
     } catch (error) {
-        return await Promise.reject(error)
+        return Promise.reject(error)
     }
 }
 
@@ -138,7 +140,7 @@ const errorInterceptor = async (error) => {
             window.localStorage.removeItem(ACCESS_TOKEN)
             window.localStorage.removeItem(REFRESH_TOKEN)
             authRequest.defaults.headers.Authorization = ''
-            return await Promise.reject(tokenRefreshError)
+            return Promise.reject(tokenRefreshError)
         }
     }
     return Promise.reject(error)

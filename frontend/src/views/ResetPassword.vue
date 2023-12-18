@@ -1,5 +1,5 @@
 <script setup>
-import NavBar from '/src/components/NavBar.vue'
+import NavBar from '../components/NavBar.vue'
 import { ref } from 'vue'
 import { useRouter } from 'vue-router'
 import { tokenRequest } from '../services/api/auth'

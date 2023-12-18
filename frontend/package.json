@@ -1,28 +1,39 @@
 {
-  "name": "sas-frontend",
-  "private": true,
-  "version": "0.0.0",
-  "type": "module",
-  "scripts": {
-    "dev": "vite",
-    "build": "vite build",
-    "preview": "vite preview"
-  },
-  "dependencies": {
-    "axios": "^1.4.0",
-    "pinia": "^2.1.4",
-    "vue": "^3.3.4",
-    "vue-router": "4"
-  },
-  "devDependencies": {
-    "@vitejs/plugin-vue": "^4.2.3",
-    "autoprefixer": "^10.4.14",
-    "eslint": "^8.44.0",
-    "eslint-config-prettier": "^8.8.0",
-    "eslint-plugin-vue": "^9.15.1",
-    "postcss": "^8.4.25",
-    "prettier": "^3.0.0",
-    "tailwindcss": "^3.3.2",
-    "vite": "^4.4.0"
-  }
+    "name": "sas-frontend",
+    "private": true,
+    "version": "0.0.0",
+    "type": "module",
+    "scripts": {
+        "dev": "vite",
+        "build": "vite build",
+        "preview": "vite preview",
+        "lint": "eslint src --ext .js",
+        "lint:fix": "eslint src --ext .js --fix",
+        "prepare": "cd ../ && husky install ./frontend/.husky"
+    },
+    "dependencies": {
+        "axios": "^1.4.0",
+        "pinia": "^2.1.4",
+        "vue": "^3.3.4",
+        "vue-router": "4"
+    },
+    "devDependencies": {
+        "@vitejs/plugin-vue": "^4.2.3",
+        "autoprefixer": "^10.4.14",
+        "eslint": "^7.32.0 || ^8.2.0",
+        "eslint-config-airbnb-base": "^15.0.0",
+        "eslint-config-prettier": "^8.8.0",
+        "eslint-plugin-import": "^2.25.2",
+        "eslint-plugin-prettier": "^5.0.1",
+        "eslint-plugin-vue": "^9.19.2",
+        "husky": "^8.0.3",
+        "lint-staged": "^15.2.0",
+        "postcss": "^8.4.25",
+        "prettier": "^3.0.0",
+        "tailwindcss": "^3.3.2",
+        "vite": "^4.4.0"
+    },
+    "lint-staged": {
+        "*.{js,css,md,vue,json,ts,tsx,jsx}": "prettier --write"
+    }
 }

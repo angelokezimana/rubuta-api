@@ -1,7 +1,7 @@
 <script setup>
 import { ref, onMounted } from 'vue'
 import { useRoute } from 'vue-router'
-import { activateAccount } from '/src/services/api/auth'
+import { activateAccount } from '../services/api/auth'
 
 const route = useRoute()
 

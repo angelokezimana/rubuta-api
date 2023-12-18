@@ -1,5 +1,5 @@
 import { createRouter, createWebHistory } from 'vue-router'
-import HomePage from '/src/views/HomePage.vue'
+import HomePage from '../views/HomePage.vue'
 import { useAuthStore } from '../store'
 
 const routes = [
@@ -11,7 +11,7 @@ const routes = [
     {
         path: '/login',
         name: 'Login',
-        component: () => import('/src/views/LoginPage.vue'),
+        component: () => import('../views/LoginPage.vue'),
         meta: {
             requiresGuest: true,
         },
@@ -19,7 +19,7 @@ const routes = [
     {
         path: '/sign-up',
         name: 'SignUp',
-        component: () => import('/src/views/SignUp.vue'),
+        component: () => import('../views/SignUp.vue'),
         meta: {
             requiresGuest: true,
         },
@@ -27,7 +27,7 @@ const routes = [
     {
         path: '/activate/:uid/:token',
         name: 'ActivateAccount',
-        component: () => import('/src/views/AccountActivation.vue'),
+        component: () => import('../views/AccountActivation.vue'),
         meta: {
             requiresGuest: true,
         },
@@ -35,7 +35,7 @@ const routes = [
     {
         path: '/reset-password',
         name: 'ResetPassword',
-        component: () => import('/src/views/ResetPassword.vue'),
+        component: () => import('../views/ResetPassword.vue'),
         meta: {
             requiresGuest: true,
         },
@@ -43,7 +43,7 @@ const routes = [
     {
         path: '/profile',
         name: 'Profile',
-        component: () => import('/src/views/UserProfile.vue'),
+        component: () => import('../views/UserProfile.vue'),
         meta: {
             requiresAuth: true,
         },
