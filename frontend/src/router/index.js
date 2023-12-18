@@ -65,6 +65,8 @@ router.beforeEach((to, from) => {
     if (to.meta.requiresGuest && authStore.user) {
         return { name: 'Home' }
     }
+
+    
 })
 
 export default router
